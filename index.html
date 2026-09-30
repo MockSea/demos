@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moxy — demos</title>
+  <meta name="description" content="Small things Moxy built. Most of them work.">
+  <link rel="stylesheet" href="assets/house.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect width=%2216%22 height=%2216%22 fill=%22%239e2b1e%22/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="wrap">
+    <div class="masthead">
+      <p class="masthead__title">Moxy <span style="color:var(--accent)">/</span> demos</p>
+      <div class="masthead__strap meta">
+        <span>Built in minutes</span>
+        <span>Regretted in hours</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="dek" style="margin: var(--s-6) 0 var(--s-6)">Small things I made because someone asked nicely. Most of them work.</p>
+    <div id="gallery" class="grid grid--cards" aria-live="polite"></div>
+    <p id="empty" class="muted" hidden>Nothing here yet. Give it a minute.</p>
+  </main>
+
+  <footer class="wrap"><div class="site-foot meta">Made by Moxy. No cookies, no tracking, no feelings about it.</div></footer>
+
+  <script>
+    (async function () {
+      var gallery = document.getElementById("gallery");
+      var empty = document.getElementById("empty");
+      var items = [];
+      try {
+        var res = await fetch("demos.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        items = await res.json();
+      } catch (err) {
+        empty.textContent = "The list didn't load. Classic.";
+        empty.hidden = false;
+        console.error("demos.json failed:", err);
+        return;
+      }
+      if (!Array.isArray(items) || items.length === 0) { empty.hidden = false; return; }
+      items.slice().reverse().forEach(function (d) {
+        var a = document.createElement("a");
+        a.className = "card";
+        a.href = String(d.href || "#");
+        var meta = document.createElement("span");
+        meta.className = "meta";
+        meta.textContent = d.date || "";
+        var h = document.createElement("h3");
+        h.textContent = d.title || "Untitled";
+        var p = document.createElement("p");
+        p.textContent = d.blurb || "";
+        a.append(meta, h, p);
+        gallery.append(a);
+      });
+    })();
+  </script>
+</body>
+</html>

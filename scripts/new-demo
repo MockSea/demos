@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# new-demo <template> <slug> "<title>" ["<blurb>"]
+# Copies templates/<template>/ into d/<slug>/, sets the title, appends to demos.json.
+set -euo pipefail
+
+usage() { echo "usage: new-demo <template> <slug> \"<title>\" [\"<blurb>\"]" >&2; exit 64; }
+[[ $# -ge 3 ]] || usage
+
+root="$(cd "$(dirname "$0")/.." && pwd)"
+template="$1" slug="$2" title="$3" blurb="${4:-}"
+
+[[ "$template" =~ ^[a-z0-9-]+$ && -d "$root/templates/$template" ]] || {
+  echo "unknown template: $template (have: $(ls "$root/templates" | tr '\n' ' '))" >&2; exit 1; }
+[[ "$slug" =~ ^[a-z0-9][a-z0-9-]*$ ]] || { echo "slug must be lowercase letters, digits, dashes" >&2; exit 1; }
+dest="$root/d/$slug"
+[[ ! -e "$dest" ]] || { echo "already exists: d/$slug" >&2; exit 1; }
+
+mkdir -p "$root/d"
+cp -R "$root/templates/$template" "$dest"
+
+TODAY="$(date +%F)" TITLE="$title" BLURB="$blurb" SLUG="$slug" ROOT="$root" node <<'JS'
+const fs = require("fs");
+const { TITLE, BLURB, SLUG, ROOT, TODAY } = process.env;
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const page = `${ROOT}/d/${SLUG}/index.html`;
+const html = fs.readFileSync(page, "utf8")
+  .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(TITLE)}</title>`)
+  .replace(/(<([a-z0-9]+)[^>]*\sdata-title[^>]*>)[\s\S]*?(<\/\2>)/, `$1${esc(TITLE)}$3`);
+fs.writeFileSync(page, html);
+const listPath = `${ROOT}/demos.json`;
+const list = JSON.parse(fs.readFileSync(listPath, "utf8"));
+const entry = { title: TITLE, href: `d/${SLUG}/`, date: TODAY, blurb: BLURB };
+fs.writeFileSync(listPath, JSON.stringify([...list, entry], null, 2) + "\n");
+JS
+
+echo "created d/$slug/ — edit d/$slug/index.html, then commit and push."

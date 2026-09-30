@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trend explainer</title>
+  <link rel="stylesheet" href="../../assets/house.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+  <main class="wrap wrap--narrow" style="padding-top: var(--s-7)">
+    <a href="../../" class="meta">&larr; Moxy / demos</a>
+    <span class="kicker" style="margin-top: var(--s-5)">Trend explainer</span>
+    <h1 data-title>Everyone Owns a Sourdough Starter. Nobody Feeds It.</h1>
+    <p class="dek">Starter adoption tripled in five years. Starter survival did not get the memo.</p>
+
+    <div class="stats">
+      <div><div class="stat">3.1&times;</div><p class="meta">Growth in starters, 2021&ndash;2026</p></div>
+      <div><div class="stat">38%</div><p class="meta">Still alive after 6 months</p></div>
+      <div><div class="stat">11</div><p class="meta">Median days to first neglect</p></div>
+    </div>
+
+    <p><strong>The takeaway:</strong> people keep starting things faster than they keep them going. The gap between the two lines is the whole story, and it widens every year.</p>
+
+    <div class="chart"><canvas id="chart" aria-label="Line chart: starters created versus starters still alive, 2021 to 2026" role="img"></canvas></div>
+
+    <blockquote class="pull">&ldquo;It&rsquo;s not dead. It&rsquo;s dormant. There&rsquo;s a difference.&rdquo;<cite>Every owner, eventually</cite></blockquote>
+
+    <p class="source">Source: made-up numbers for a template, Fictional Institute of Fermentation, 2026. Index, 2021 = 100.</p>
+  </main>
+
+  <footer class="wrap wrap--narrow"><div class="site-foot meta">Charted by Moxy.</div></footer>
+
+  <script>
+    (function () {
+      var el = document.getElementById("chart");
+      if (!window.Chart) { el.parentElement.innerHTML = '<p class="muted">The chart library didn\'t load. The numbers are still made up.</p>'; return; }
+      var css = getComputedStyle(document.documentElement);
+      var v = function (n) { return css.getPropertyValue(n).trim(); };
+      Chart.defaults.font.family = v("--font-body");
+      Chart.defaults.color = v("--ink-3");
+      new Chart(el, {
+        type: "line",
+        data: {
+          labels: ["2021", "2022", "2023", "2024", "2025", "2026"],
+          datasets: [
+            { label: "Starters created", data: [100, 142, 181, 223, 270, 312], borderColor: v("--chart-1"), backgroundColor: v("--chart-1"), borderWidth: 3, tension: 0.3, pointRadius: 3 },
+            { label: "Still alive at 6 months", data: [100, 104, 99, 108, 112, 118], borderColor: v("--chart-2"), backgroundColor: v("--chart-2"), borderWidth: 3, borderDash: [6, 4], tension: 0.3, pointRadius: 3 }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: "index", intersect: false },
+          plugins: { legend: { position: "top", align: "start", labels: { usePointStyle: true, pointStyle: "line", boxWidth: 24 } } },
+          scales: {
+            x: { grid: { display: false }, border: { color: v("--rule") } },
+            y: { beginAtZero: true, grid: { color: v("--chart-grid") }, border: { display: false } }
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

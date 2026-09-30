@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Daily Brief</title>
+  <link rel="stylesheet" href="../../assets/house.css">
+  <style>
+    .brief h3 { font-size: 1.1rem; }
+    .brief p { font-size: 0.95rem; color: var(--ink-2); }
+    .brief + .brief { margin-top: var(--s-5); padding-top: var(--s-5); border-top: 1px solid var(--rule); }
+    .lead h1 { font-size: clamp(2rem, 5.5vw, 3.2rem); }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="masthead">
+      <p class="meta">Edition of one &middot; Vol. I, No. 1</p>
+      <p class="masthead__title" data-title>The Daily Brief</p>
+      <div class="masthead__strap meta">
+        <span id="today">Wednesday, September 30, 2026</span>
+        <span>Price: your attention</span>
+        <span>Weather: indoors</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" style="margin-top: var(--s-6)">
+    <div class="cols cols--lead">
+      <article class="lead">
+        <span class="kicker">Lead story</span>
+        <h1>Local Man Opens 43 Newsletters, Reads Two, Feels Informed</h1>
+        <p class="dek">Experts call the remaining 41 &ldquo;aspirational.&rdquo; He calls them &ldquo;for later.&rdquo;</p>
+        <p class="meta">By the Desk &middot; 4 min read</p>
+        <p class="lede">A routine audit of a fictional inbox this morning found forty-three unread newsletters, each promising to make the reader smarter in five minutes or less. Taken together, that is three and a half hours of being smarter, which nobody has.</p>
+        <p>The two that did get read were about the same thing, from opposite directions, which is how you know it matters. Placeholder copy continues here so the column has some weight to it and you can judge the measure, the leading, and whether the drop cap earns its keep.</p>
+        <blockquote class="pull">&ldquo;I subscribe to be the kind of person who reads them.&rdquo;<cite>A reader who does not exist</cite></blockquote>
+        <p>Analysts expect the backlog to grow at a steady rate until a long weekend, at which point it will be marked all-as-read in a single, cleansing gesture.</p>
+      </article>
+
+      <aside class="stack">
+        <div class="box">
+          <p class="box__head">From the desk of Moxy</p>
+          <p>Read the lead, skip the third brief, and do not open the one about productivity. You have been productive enough to subscribe. That counts.</p>
+          <p class="meta" style="margin:0">&mdash; M.</p>
+        </div>
+        <div>
+          <span class="kicker">By the numbers</span>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Item</th><th class="num">Count</th></tr></thead>
+              <tbody>
+                <tr><td>Newsletters received</td><td class="num">43</td></tr>
+                <tr><td>Actually read</td><td class="num">2</td></tr>
+                <tr><td>&ldquo;Quick question&rdquo; emails</td><td class="num">7</td></tr>
+                <tr><td>Questions that were quick</td><td class="num">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <hr class="rule--double">
+
+    <div class="cols cols--3">
+      <section>
+        <span class="kicker">Tech</span>
+        <div class="brief"><h3>Startup Pivots to Pivoting</h3><p>Acme Widgets Inc. says its new platform lets other companies change direction faster. Early customers report dizziness.</p></div>
+        <div class="brief"><h3>Chatbot Declines to Have Opinion, Has One Anyway</h3><p>Sources close to the model say it was &ldquo;just asking questions.&rdquo;</p></div>
+      </section>
+      <section>
+        <span class="kicker">Markets</span>
+        <div class="brief"><h3>Index Goes Up, Then Down, Then Sideways</h3><p>The Example 500 closed flat after a day analysts described as &ldquo;a lot, for nothing.&rdquo;</p></div>
+        <div class="brief"><h3>Coffee Prices Now a Personality Trait</h3><p>A survey of nobody found that the fourth-wave pour-over is mostly about the vibe.</p></div>
+      </section>
+      <section>
+        <span class="kicker">Culture</span>
+        <div class="brief"><h3>Band You Liked in 2014 Announces Reunion</h3><p>Tickets go on sale Friday at a price that suggests they remember you too.</p></div>
+        <div class="brief"><h3>Novel About Grief Is, Reportedly, About Grief</h3><p>Critics were moved. The rest of us will get to it after the newsletters.</p></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="wrap"><div class="site-foot meta">Compiled by Moxy from sources that are, for this template, entirely made up.</div></footer>
+  <script>
+    try {
+      document.getElementById("today").textContent = new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+    } catch (e) { /* keep the static date */ }
+  </script>
+</body>
+</html>
